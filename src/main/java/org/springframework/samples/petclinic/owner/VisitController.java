@@ -15,8 +15,10 @@
  */
 package org.springframework.samples.petclinic.owner;
 
-import org.springframework.samples.petclinic.visit.Visit;
-import org.springframework.samples.petclinic.visit.VisitRepository;
+import org.springframework.samples.petclinic.jpa.repository.PetRepository;
+import org.springframework.samples.petclinic.jpa.repository.VisitRepository;
+import org.springframework.samples.petclinic.model.Pet;
+import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;

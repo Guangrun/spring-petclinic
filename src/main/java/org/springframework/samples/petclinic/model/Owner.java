@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.owner;
+package org.springframework.samples.petclinic.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,7 +32,7 @@ import javax.validation.constraints.NotEmpty;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.core.style.ToStringCreator;
-import org.springframework.samples.petclinic.model.Person;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Simple JavaBean domain object representing an owner.
@@ -44,6 +44,7 @@ import org.springframework.samples.petclinic.model.Person;
  */
 @Entity
 @Table(name = "owners")
+@Document(collection = "owners")
 public class Owner extends Person {
     @Column(name = "address")
     @NotEmpty
@@ -85,14 +86,14 @@ public class Owner extends Person {
         this.telephone = telephone;
     }
 
-    protected Set<Pet> getPetsInternal() {
+    public Set<Pet> getPetsInternal() {
         if (this.pets == null) {
             this.pets = new HashSet<>();
         }
         return this.pets;
     }
 
-    protected void setPetsInternal(Set<Pet> pets) {
+    public void setPetsInternal(Set<Pet> pets) {
         this.pets = pets;
     }
 

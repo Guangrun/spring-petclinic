@@ -16,8 +16,17 @@
 
 package org.springframework.samples.petclinic;
 
+import java.util.HashSet;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.samples.petclinic.jpa.repository.OwnerRepository;
+import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.mongo.repository.MongoOwnerRepository;
 
 /**
  * PetClinic Spring Boot Application.
@@ -26,10 +35,40 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  */
 @SpringBootApplication
-public class PetClinicApplication {
+@EnableJpaRepositories(basePackages="org.springframework.samples.petclinic.jpa.repository")
+@EnableMongoRepositories(basePackages="org.springframework.samples.petclinic.mongo.repository")
+public class PetClinicApplication implements CommandLineRunner {
 
+	
+	@Autowired
+	OwnerRepository ownerRepository;
+	@Autowired
+	MongoOwnerRepository mongoOwnerRepository;
+	
     public static void main(String[] args) {
         SpringApplication.run(PetClinicApplication.class, args);
     }
+
+	@Override
+	public void run(String... args) throws Exception {
+		ownerRepository.findAll().stream().forEach(o -> saveToMongo(o));
+		
+		System.out.println("Find owner with lastname started by Davis");
+		mongoOwnerRepository.findByLastNameLike("Davis").forEach(o-> System.out.println(o));
+		
+	}
+	
+	private void saveToMongo(Owner o) {
+	    Owner owner = new Owner();
+	    owner.setAddress(o.getAddress());
+	    owner.setCity(o.getCity());
+	    owner.setFirstName(o.getFirstName());
+	    owner.setId(o.getId());
+	    owner.setLastName(o.getLastName());
+	    owner.setPetsInternal(new HashSet<>());
+	    owner.setTelephone(o.getTelephone());
+		mongoOwnerRepository.save(owner);
+		
+	}
 
 }

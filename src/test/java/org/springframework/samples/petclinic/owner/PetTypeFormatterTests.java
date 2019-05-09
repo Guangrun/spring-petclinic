@@ -28,6 +28,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.samples.petclinic.jpa.repository.PetRepository;
+import org.springframework.samples.petclinic.model.PetType;
 
 import static org.junit.Assert.assertEquals;
 

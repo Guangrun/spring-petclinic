@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.owner;
+package org.springframework.samples.petclinic.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -34,9 +34,8 @@ import javax.persistence.Table;
 
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.samples.petclinic.model.NamedEntity;
-import org.springframework.samples.petclinic.visit.Visit;
 
 /**
  * Simple business object representing a pet.
@@ -47,6 +46,7 @@ import org.springframework.samples.petclinic.visit.Visit;
  */
 @Entity
 @Table(name = "pets")
+@Document(collection = "pets")
 public class Pet extends NamedEntity {
 
     @Column(name = "birth_date")
@@ -84,18 +84,18 @@ public class Pet extends NamedEntity {
         return this.owner;
     }
 
-    protected void setOwner(Owner owner) {
+    public void setOwner(Owner owner) {
         this.owner = owner;
     }
 
-    protected Set<Visit> getVisitsInternal() {
+    public Set<Visit> getVisitsInternal() {
         if (this.visits == null) {
             this.visits = new HashSet<>();
         }
         return this.visits;
     }
 
-    protected void setVisitsInternal(Set<Visit> visits) {
+    public void setVisitsInternal(Set<Visit> visits) {
         this.visits = visits;
     }
 

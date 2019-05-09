@@ -13,31 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.vet;
+package org.springframework.samples.petclinic.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * Simple domain object representing a list of veterinarians. Mostly here to be used for the 'vets' {@link
- * org.springframework.web.servlet.view.xml.MarshallingView}.
+ * Models a {@link Vet Vet's} specialty (for example, dentistry).
  *
- * @author Arjen Poutsma
+ * @author Juergen Hoeller
  */
-@XmlRootElement
-public class Vets {
-
-    private List<Vet> vets;
-
-    @XmlElement
-    public List<Vet> getVetList() {
-        if (vets == null) {
-            vets = new ArrayList<>();
-        }
-        return vets;
-    }
+@Entity
+@Table(name = "specialties")
+@Document(collection = "specialties")
+public class Specialty extends NamedEntity implements Serializable {
 
 }

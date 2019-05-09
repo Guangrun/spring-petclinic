@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.vet;
+package org.springframework.samples.petclinic.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
-import org.springframework.samples.petclinic.model.Person;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Simple JavaBean domain object representing a veterinarian.
@@ -43,6 +43,7 @@ import org.springframework.samples.petclinic.model.Person;
  */
 @Entity
 @Table(name = "vets")
+@Document(collection = "vets")
 public class Vet extends Person {
 
     @ManyToMany(fetch = FetchType.EAGER)

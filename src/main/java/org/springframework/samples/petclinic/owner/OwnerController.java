@@ -15,6 +15,10 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.jpa.repository.OwnerRepository;
+import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.mongo.repository.MongoOwnerRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,6 +44,9 @@ class OwnerController {
 
     private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
     private final OwnerRepository owners;
+    
+    @Autowired
+    private MongoOwnerRepository mongoOwnerRepository;
 
 
     public OwnerController(OwnerRepository clinicService) {
@@ -83,7 +90,7 @@ class OwnerController {
         }
 
         // find owners by last name
-        Collection<Owner> results = this.owners.findByLastName(owner.getLastName());
+        Collection<Owner> results = this.mongoOwnerRepository.findByLastNameLike(owner.getLastName());
         if (results.isEmpty()) {
             // no owners found
             result.rejectValue("lastName", "notFound", "not found");
